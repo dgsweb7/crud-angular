@@ -1,7 +1,7 @@
 .jumbotron {
   width: 98%;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -16,9 +16,6 @@ h3 {
 }
 .selecionado {
   background-color: yellow;
-}
-.negrito {
-  font-weight: bold;
 }
 hr {
   border-color: #999;

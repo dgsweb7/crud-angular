@@ -12,10 +12,10 @@
 </head>
 
 <body ng-controller="personController">
-  <h1>{{app}}</h1>
-  {{message}}
   <div class="jumbotron">
-    <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
+    <h3>{{app}}</h3>
+    {{message}}
+    <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="What you want search ?"/>
     <table ng-show="personList.length > 0" class="table table-striped">
       <tr>
         <th></th>
@@ -31,7 +31,7 @@
       </tr>
       <tr ng-repeat="person in personList | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
         <td><input type="checkbox" ng-model="person.selecionado" /></td>
-        <td>{{person.Id}}</td>
+        <td><a href="" ng-click="getById(person)">{{person.Id}}</a></td>
         <td>{{person.FirstName}}</td>
         <td>{{person.LastName}}</td>
         <td>{{person.Alias}}</td>
@@ -86,10 +86,12 @@
 
   -->
 
-    <button class="btn btn-primary" ng-click="Add(person)">Create</button>
-    <button class="btn btn-danger"  ng-click="Delete(personList)">Delete</button>
+    <button class="btn btn-primary" ng-click="Add(person)" ng-show="!updateMode">Create</button>
+    <button class="btn btn-danger"  ng-click="Delete(personList)" ng-show="!updateMode">Delete</button>
+    <button class="btn btn-primary" ng-click="Update(person)" ng-show="updateMode">Update</button>
+    <button class="btn btn-danger"  ng-click="CancelUpdate()" ng-show="updateMode">Cancel</button>
 
   </div>
-  <!--<div ng-include="'view/footer.html'"></div>-->
+
 </body>
 </html>

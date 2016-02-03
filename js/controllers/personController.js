@@ -2,11 +2,21 @@ angular.module("personApp").controller("personController", function ($scope, $ht
 
 	$scope.app = "Person Report";
 	$scope.personList = [];
+	$scope.updateMode = false;
 
 	//GET
 	var getAll = function () {
 		$http.get("http://geprosaasapi.apphb.com/person/").success(function (data) {
 			$scope.personList = data;
+		}).error(function (data, status) {
+			$scope.message = "Error Occurred: " + data;
+		});
+	};
+
+	$scope.getById = function (person) {
+		$http.get("http://geprosaasapi.apphb.com/person/" + person.Id).success(function (data) {
+			$scope.person = data;
+			$scope.updateMode = true;
 		}).error(function (data, status) {
 			$scope.message = "Error Occurred: " + data;
 		});
@@ -20,9 +30,24 @@ angular.module("personApp").controller("personController", function ($scope, $ht
 			clearFields();
 			getAll();
 		}).error(function (data, status) {
-			$scope.message = "Error Occurred: " + data;
-			console.log(person);
+			$scope.message = "Error Occurred: " + data;	
 		});
+	};
+
+	$scope.Update = function (person) {
+		person.UpdatedAt = new Date();
+		person.UpdatedBy = 'salesman';
+		$http.put("http://geprosaasapi.apphb.com/person/", person).success(function (data) {
+			clearFields();
+			getAll();
+		}).error(function (data, status) {
+			$scope.message = "Error Occurred: " + data;
+		});
+	};
+
+	$scope.CancelUpdate = function () {
+		clearFields();
+		$scope.updateMode = false;
 	};
 
 	$scope.Delete = function (personList) {
