@@ -1,0 +1,78 @@
+<html ng-app="personApp">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Person List</title>
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/app.css">
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-messages.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers/personController.js"></script>
+</head>
+
+<body ng-controller="personController">
+  <h1>{{app}}</h1>
+  {{message}}
+  <div class="jumbotron">
+    <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
+    <table ng-show="personList.length > 0" class="table table-striped">
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th><a href="" ng-click="sortBy('FirstName')">First Name</a></th>
+        <th><a href="" ng-click="sortBy('LastName')">Last Name<a/></th>
+        <th>Alias</th>
+        <th>Enabled</th>
+        <th>Created At</th>
+        <th>Created By</th>
+        <th>Updated At</th>
+        <th>Updated By</th>
+      </tr>
+      <tr ng-repeat="person in personList | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
+        <td><input type="checkbox" ng-model="person.selecionado" /></td>
+        <td>{{person.Id}}</td>
+        <td>{{person.FirstName}}</td>
+        <td>{{person.LastName}}</td>
+        <td>{{person.Alias}}</td>
+        <td>{{person.Enabled}}</td>
+        <td>{{person.CreatedAt | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{person.CreatedBy}}</td>
+        <td>{{person.UpdatedAt | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{person.UpdatedBy}}</td>       
+      </tr>
+    </table>
+    
+    <hr/>
+
+    <form name="personForm">
+      <input class="form-control" type="text" ng-model="person.FirstName" name="firstname" placeholder="First Name" ng-required="true" />
+      <input class="form-control" type="text" ng-model="person.LastName" name="lastname" placeholder="Last Name" ng-required="true"/>
+      <input class="form-control" type="text" ng-model="person.Alias" name="alias" placeholder="Alias" ng-required="true"/>
+    </form>
+
+<!--    <div ng-show="contatoForm.nome.$dirty" ng-messages="contatoForm.nome.$error">
+      <div ng-message="required" class="alert alert-danger">
+        Por favor, preencha o campo nome!
+      </div>
+      <div ng-message="minlength" class="alert alert-danger">
+        O campo nome deve ter no mínimo 10 caracteres.
+      </div>
+    </div>
+
+    <div ng-show="contatoForm.telefone.$error.required && contatoForm.telefone.$dirty" class="alert alert-danger">
+      Por favor, preencha o campo telefone!
+    </div>
+    <div ng-show="contatoForm.telefone.$error.pattern" class="alert alert-danger">
+      O campo telefone deve ter o formato DDDDD-DDDD.
+    </div>
+
+  -->
+
+    <button class="btn btn-primary btn-block" ng-click="Add(person)">Create</button>
+    <button class="btn btn-danger btn-block"  ng-click="Delete(personList)">Delete</button>
+
+  </div>
+  <!--<div ng-include="'view/footer.html'"></div>-->
+</body>
+</html>
